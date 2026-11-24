@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BolNote — Hindi, English, Hinglish recordings into notes you can check</title>
+<meta name="description" content="Upload a phone recording in Hindi, English or Hinglish. Get a searchable transcript, a summary linked to the exact seconds it came from, and action items. No 30-minute cap, no 3-import lifetime limit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand"><span class="onair" aria-hidden="true"></span> BolNote</div>
+  <p class="tagline">Recordings in Hindi, English, Hinglish — turned into notes you can check.</p>
+</header>
+
+<main>
+  <section class="app" aria-label="BolNote app">
+    <div id="dropzone" class="dropzone" tabindex="0" role="button"
+         aria-label="Choose a recording, or drag and drop an audio file here">
+      <p class="dz-title">Drop a recording here, or <span class="dz-link">choose a file</span></p>
+      <p class="dz-sub">Lectures, interviews, client calls, voice-note debriefs. mp3, m4a, wav, ogg, webm, mp4 — up to 4 hours.</p>
+      <input type="file" id="fileInput" accept="audio/*,video/mp4,video/webm" hidden>
+    </div>
+
+    <div id="fileMeta" class="filemeta" hidden>
+      <span id="fileName"></span>
+      <span id="fileInfo" class="muted"></span>
+      <button id="newBtn" class="ghost" type="button">New recording</button>
+    </div>
+
+    <div class="controls">
+      <label class="lang">Spoken language
+        <select id="langSelect">
+          <option value="">Auto-detect</option>
+          <option value="hi">Hindi</option>
+          <option value="en">English</option>
+        </select>
+      </label>
+      <button id="transcribeBtn" class="primary" type="button" disabled>Transcribe</button>
+      <button id="cancelBtn" class="ghost" type="button" hidden>Cancel</button>
+      <span id="progress" class="progress" role="status" aria-live="polite"></span>
+    </div>
+
+    <audio id="player" controls hidden></audio>
+
+    <div class="ridge-wrap">
+      <canvas id="ridge" aria-label="Waveform timeline. Activate a transcript line below to jump to that moment."></canvas>
+      <div id="ridgeTip" class="ridge-tip" hidden></div>
+    </div>
+
+    <div class="workspace">
+      <div class="transcript-pane">
+        <div class="pane-head">
+          <h2>Transcript</h2>
+          <div class="tools">
+            <input id="searchBox" type="search" placeholder="Search this recording…" aria-label="Search the transcript">
+            <span id="hitCount" class="muted"></span>
+            <button id="copyBtn" class="ghost" type="button" disabled>Copy</button>
+            <button id="txtBtn" class="ghost" type="button" disabled>.txt</button>
+            <button id="srtBtn" class="ghost" type="button" disabled>.srt</button>
+          </div>
+        </div>
+        <p id="transcriptEmpty" class="muted">Nothing here yet. Your words will appear line by line, each with the second it was spoken. Tap any line to hear that moment.</p>
+        <ol id="transcript" class="transcript"></ol>
+      </div>
+
+      <aside class="notes-pane" aria-label="Notes">
+        <div class="pane-head">
+          <h2>Notes</h2>
+          <button id="notesBtn" class="primary small" type="button" disabled>Make notes</button>
+        </div>
+        <p id="notesStatus" class="muted">A short summary and the action items — every point linked to the exact second it came from, so you can check it instead of trusting it.</p>
+        <h3>Summary</h3>
+        <ul id="summaryList" class="notes-list"></ul>
+        <h3>Action items</h3>
+        <ul id="actionList" class="notes-list actions"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="story">
+    <h2>The problem</h2>
+    <p>The big note-taking apps were not built for the recordings already sitting in your phone. On Otter's own pricing page (read in November 2026): the free plan stops a conversation at <strong>30 minutes</strong>, allows <strong>3 imported files in your whole lifetime</strong>, and transcribes in six languages — <strong>Hindi is not one of them</strong>. If your lecture, interview or client call is in Hindi or Hinglish, the tool simply cannot hear it.</p>
+
+    <h2>What BolNote does instead</h2>
+    <p>Upload-first, nothing else. No bot joining your calls, no account, no minute pool. Your recording is cut into short pieces, transcribed by Whisper (which does speak Hindi), and stitched back into one transcript. The ridge above is your recording's own shape — tap it, or any line of text, to hear that exact moment. Notes are made only from your transcript, and every point carries the second it came from.</p>
+
+    <h2>Honest limits</h2>
+    <ul class="limits">
+      <li><strong>No speaker names.</strong> The transcription service used here does not label who said what. Lines are split by pauses, not by person.</li>
+      <li><strong>Free quota.</strong> Transcription runs on a free tier, so very heavy use can hit a daily ceiling. Nothing is ever charged.</li>
+      <li><strong>Your audio leaves your device once</strong> — to the transcription API, in pieces — and is not stored by BolNote. The notes are made from the transcript text only.</li>
+      <li><strong>Mixed language is hard.</strong> Hinglish code-switching is exactly what this is built for, and also where mistakes will happen. The timestamps are there so you can verify any line in one tap.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <p>Built by M S Abhishek, a student who was tired of lecture recordings dying in his phone. Transcription: Groq Whisper. Notes: Groq Qwen. Problem facts: <a href="https://otter.ai/pricing" rel="noopener">otter.ai/pricing</a>, accessed Nov 2026.</p>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.152.2/three.min.js"></script>
+<script src="utils.js"></script>
+<script src="wave3d.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
