@@ -16,7 +16,13 @@
 </header>
 
 <main>
-  <section class="app" aria-label="BolNote app">
+  <section class="hero" aria-label="What this is">
+    <h1>Your recordings, in notes you can check.</h1>
+    <p class="hero-sub">Drop a lecture, interview or client call in Hindi, English or Hinglish. Get a transcript you can search, and notes linked to the exact second they came from. No account, no 30-minute cap, no 3-import lifetime limit.</p>
+    <a class="scroll-cue" href="#app">Try it below <span aria-hidden="true">↓</span></a>
+  </section>
+
+  <section class="app" id="app" aria-label="BolNote app">
     <div id="dropzone" class="dropzone" tabindex="0" role="button"
          aria-label="Choose a recording, or drag and drop an audio file here">
       <p class="dz-title">Drop a recording here, or <span class="dz-link">choose a file</span></p>
@@ -48,6 +54,7 @@
     <div class="ridge-wrap">
       <canvas id="ridge" aria-label="Waveform timeline. Activate a transcript line below to jump to that moment."></canvas>
       <div id="ridgeTip" class="ridge-tip" hidden></div>
+      <p id="ridgeCap" class="muted ridge-cap">Demo waveform — drop a recording and the ridge becomes your recording's own shape.</p>
     </div>
 
     <div class="workspace">
@@ -86,6 +93,9 @@
 
     <h2>What BolNote does instead</h2>
     <p>Upload-first, nothing else. No bot joining your calls, no account, no minute pool. Your recording is cut into short pieces, transcribed by Whisper (which does speak Hindi), and stitched back into one transcript. The ridge above is your recording's own shape — tap it, or any line of text, to hear that exact moment. Notes are made only from your transcript, and every point carries the second it came from.</p>
+
+    <h2>The outcome</h2>
+    <p>You stop re-listening to whole recordings to find one line. The transcript is searchable, the notes are short, and every point carries the second it came from — so you check it in one tap instead of trusting it.</p>
 
     <h2>Honest limits</h2>
     <ul class="limits">

@@ -7,7 +7,7 @@
   var els = {};
   ["dropzone", "fileInput", "fileMeta", "fileName", "fileInfo", "newBtn",
    "langSelect", "transcribeBtn", "cancelBtn", "progress", "player",
-   "ridge", "ridgeTip", "searchBox", "hitCount", "copyBtn", "txtBtn",
+   "ridge", "ridgeTip", "ridgeCap", "searchBox", "hitCount", "copyBtn", "txtBtn",
    "srtBtn", "transcriptEmpty", "transcript", "notesBtn", "notesStatus",
    "summaryList", "actionList"].forEach(function (id) { els[id] = document.getElementById(id); });
 
@@ -73,6 +73,7 @@
           return;
         }
         els.fileInfo.textContent = U.formatTime(state.duration) + " · " + Math.round(file.size / 1024) + " KB";
+        els.ridgeCap.textContent = "Your recording's shape — tap the ridge, or any line, to hear that moment.";
         ridge.setEnergies(computeEnergies(decoded, 240), state.duration);
         state.plan = U.planChunks(state.duration);
         els.transcribeBtn.disabled = false;
@@ -327,6 +328,7 @@
     els.summaryList.innerHTML = ""; els.actionList.innerHTML = "";
     els.transcribeBtn.disabled = true; els.transcribeBtn.textContent = "Transcribe";
     els.notesBtn.disabled = true;
+    els.ridgeCap.textContent = "Demo waveform — drop a recording and the ridge becomes your recording's own shape.";
     els.copyBtn.disabled = els.txtBtn.disabled = els.srtBtn.disabled = true;
     ridge.dispose();
   }
